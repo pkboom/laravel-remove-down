@@ -1,12 +1,12 @@
 const vscode = require("vscode");
-const RemoveComments = require("./RemoveComments");
+const RemoveDown = require("./RemoveDown");
 
 function activate(context) {
-  let cleaner = new RemoveComments();
+  let remover = new RemoveDown();
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("remove.comments", () => {
-      cleaner.clean();
+    vscode.commands.registerCommand("remove.down", () => {
+      remover.clean();
     })
   );
 }

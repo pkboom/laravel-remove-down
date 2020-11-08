@@ -12,10 +12,10 @@ module.exports = class RemoveComments {
       return;
     }
 
-    await this.removeComments(activeDocument);
+    await this.removeDown(activeDocument);
   }
 
-  async removeComments(activeDocument) {
+  async removeDown(activeDocument) {
     let startLine, endLine;
 
     let doc = await vscode.workspace.openTextDocument(activeDocument);
@@ -26,14 +26,11 @@ module.exports = class RemoveComments {
       if (/^\*\//.test(textLine)) {
         endLine = line + 1;
 
-        console.log(endLine);
-
         continue;
       }
 
       if (/^\/\*/.test(textLine)) {
         startLine = line;
-        console.log(startLine);
 
         this.activeEditor().insertSnippet(
           new vscode.SnippetString(),
@@ -41,10 +38,10 @@ module.exports = class RemoveComments {
         );
       }
 
-      if (/\/\//.test(textLine)) {
+      if (/down/.test(textLine)) {
         this.activeEditor().insertSnippet(
-          new vscode.SnippetString("\t\t\t\n"),
-          this.range(line, line + 1)
+          new vscode.SnippetString("}\n"),
+          this.range(line-6, line + 1)
         );
       }
     }
